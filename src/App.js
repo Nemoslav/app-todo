@@ -36,7 +36,7 @@ doneTask = id =>{
   });
 };
 
-dTask = id =>{
+deleteTask = id =>{
   const index =this.state.tasks.map(task => task.id).indexOf(id);
   this.setState(state =>{
     let {tasks} = state;
