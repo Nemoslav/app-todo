@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 class TaskInput extends React.Component {
   constructor(props) {
     super(props);
@@ -9,6 +10,8 @@ class TaskInput extends React.Component {
     };
   }
 
+
+
   addTask = () => {
     const { input } = this.state;
     if (input) {
@@ -17,6 +20,7 @@ class TaskInput extends React.Component {
     }
   };
 
+
   handleEnter = event => {
     if (event.key === 'Enter') this.addTask();
   };
@@ -24,18 +28,32 @@ class TaskInput extends React.Component {
   inputChange = event => {
     this.setState({ input: event.target.value });
   };
+  
+  close = () => {
+document.getElementById("input","window").style.display = "none"
+document.getElementById("input","window").style.zIndex = "-1"
+}
+  open = () => {
+    document.getElementById("input","window").style.display = "block"
+    document.getElementById("input","window").style.zIndex = "1000"
+  }
 
   render() {
     const { input } = this.state;
-
     return (
-      <div className="task-input">
-        <input
-          onKeyPress={this.handleEnter}
-          onChange={this.inputChange}
-          value={input}
-        ></input>
-        <button onClick={this.addTask}>ADD</button>
+      <div class = "preTask">
+<button onClick = {this.open} >New Task</button>
+        <div id="input" class="task-input">
+          <div id="window" class="task-window">
+            <button class="task-button" onClick={this.addTask}>ADD</button>
+            <button id="close" class="task-close" onClick={this.close}>❌ </button>
+            <input
+              onKeyPress={this.handleEnter}
+              onChange={this.inputChange}
+              value={input}
+            ></input>
+          </div> 
+        </div> 
       </div>
     );
   }
