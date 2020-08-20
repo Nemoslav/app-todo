@@ -15,6 +15,8 @@ class App extends React.Component {
     };
 }
 
+
+
 addTask = task => {
   this.setState(state =>{
     let {tasks} = state;
@@ -45,13 +47,34 @@ deleteTask = id =>{
   });
 };
 
+paginations = () => {
+ 
+ let numberOfPage = 3
+      let pages=Math.ceil(this.tasks.length / numberOfPage)
+      for(let i=1; i<=pages;++i){
+      }
+  for(let p of pages){
+    p.addEventListener("click", function(){
+      let pageNum = +this.innerHTML
+      let start = (pageNum - 1)*numberOfPage
+      let end = start + numberOfPage
+      let newtasks = this.tasks.slice(start,end)
+      for(let newtask of newtasks){
+
+      }
+    })
+  }
+}
+
+
+
 render(){
   const{tasks} = this.state;
   const aktiveTasks = tasks.filter(task => ! task.done);
   const doneTasks = tasks.filter(task => task.done);
 
   return( <div className="App">
-    <h1 className="top">Active tasks:{aktiveTasks.length}</h1>
+    <h1 className="top">Active tasks:{aktiveTasks.length}</h1> 
     {[...aktiveTasks, ...doneTasks].map(task => (
       <Task 
         doneTask = {() => this.doneTask(task.id)} 
