@@ -8,13 +8,29 @@ class App extends React.Component {
     
     this.state = {
       tasks:[
-        {id:1, title: 'Do todo', done : true},
-        {id:2, title: 'Do list', done : true},
-        {id:3, title: 'Do create', done : false}
+        {id:1, title: '1', done : true},
+        {id:2, title: '2', done : false},
+        {id:3, title: '3', done : false},
+        {id:4, title: '4', done : false},
+        {id:5, title: '5', done : false},
+        {id:6, title: '6', done : false},
+        {id:7, title: '7', done : false},
+        {id:8, title: '8', done : true},
+        {id:9, title: '9', done : false}
+      ],
+      pages:[
+        {number:<li>1</li>},
+        {number:<li>2</li>},
+        {number:<li>3</li>},
+        {number:<li>4</li>},
+        {number:<li>5</li>},
       ]
     };
 }
 
+pagination = () => {
+
+}
 
 
 addTask = task => {
@@ -47,27 +63,6 @@ deleteTask = id =>{
   });
 };
 
-paginations = () => {
- 
- let numberOfPage = 3
-      let pages=Math.ceil(this.tasks.length / numberOfPage)
-      for(let i=1; i<=pages;++i){
-      }
-  for(let p of pages){
-    p.addEventListener("click", function(){
-      let pageNum = +this.innerHTML
-      let start = (pageNum - 1)*numberOfPage
-      let end = start + numberOfPage
-      let newtasks = this.tasks.slice(start,end)
-      for(let newtask of newtasks){
-
-      }
-    })
-  }
-}
-
-
-
 render(){
   const{tasks} = this.state;
   const aktiveTasks = tasks.filter(task => ! task.done);
@@ -75,16 +70,18 @@ render(){
 
   return( <div className="App">
     <h1 className="top">Active tasks:{aktiveTasks.length}</h1> 
-    {[...aktiveTasks, ...doneTasks].map(task => (
-      <Task 
+    {[...aktiveTasks, ...doneTasks].map(task => 
+    <Task 
         doneTask = {() => this.doneTask(task.id)} 
         deleteTask = {() => this.deleteTask(task.id)}
         task={task} 
         key={task.id}>
-        </Task> 
-        ))}
-        <TaskInput addTask= {this.addTask}></TaskInput>
+    </Task> 
+        )}
+    <TaskInput addTask= {this.addTask}></TaskInput>
+    <h1>f11 для полного экрана</h1>
     </div>
+  
   );
   }
 }

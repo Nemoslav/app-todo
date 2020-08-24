@@ -1,7 +1,7 @@
-  import React from 'react';
+  import React, { createElement } from 'react';
 
 const Task = ({ task, ...props }) => {
-  
+
   const ActionBtn = () => (
     <div className="action-btn">
       {!task.done ? (
@@ -23,7 +23,7 @@ const Task = ({ task, ...props }) => {
       <p>{task.title}</p>
       <ActionBtn></ActionBtn>
     </div>
-  );
+  )
 };
 
 export default Task;

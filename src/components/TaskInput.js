@@ -10,8 +10,6 @@ class TaskInput extends React.Component {
     };
   }
 
-
-
   addTask = () => {
     const { input } = this.state;
     if (input) {
