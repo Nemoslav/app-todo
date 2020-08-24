@@ -1,11 +1,12 @@
 import React from 'react';
 import Task from './components/Task';
 import TaskInput from './components/TaskInput';
+import Paginator from "./components/Paginator";
 
 class App extends React.Component {
  constructor() {
     super();
-    
+
     this.state = {
       tasks:[
         {id:1, title: '1', done : true},
@@ -18,13 +19,15 @@ class App extends React.Component {
         {id:8, title: '8', done : true},
         {id:9, title: '9', done : false}
       ],
-      pages:[
+      pageSize: 5,
+      currentPage: 1
+      /*pages:[
         {number:<li>1</li>},
         {number:<li>2</li>},
         {number:<li>3</li>},
         {number:<li>4</li>},
         {number:<li>5</li>},
-      ]
+      ]*/
     };
 }
 
@@ -55,33 +58,41 @@ doneTask = id =>{
 };
 
 deleteTask = id =>{
-  const index =this.state.tasks.map(task => task.id).indexOf(id);
+  const index =this.state.tasks.map(task => task.id).indexOf(id)
   this.setState(state =>{
-    let {tasks} = state;
-    delete tasks[index];
-    return tasks;
+    let {tasks} = state
+     tasks.splice(index,1)                                                // learn.Js.ru
+    return tasks
   });
 };
 
+setPage = (page) => {
+  this.setState({
+    currentPage: page
+  })
+}
+
 render(){
-  const{tasks} = this.state;
-  const aktiveTasks = tasks.filter(task => ! task.done);
-  const doneTasks = tasks.filter(task => task.done);
+
+  const {tasks, currentPage, pageSize} = this.state;
+  let start = (currentPage - 1)*pageSize;
+  let end = start + pageSize;
+  let taskToShow = tasks.slice(start,end);
 
   return( <div className="App">
-    <h1 className="top">Active tasks:{aktiveTasks.length}</h1> 
-    {[...aktiveTasks, ...doneTasks].map(task => 
-    <Task 
-        doneTask = {() => this.doneTask(task.id)} 
-        deleteTask = {() => this.deleteTask(task.id)}
-        task={task} 
-        key={task.id}>
-    </Task> 
-        )}
+    <h1 className="top">Active tasks:{tasks.filter(task => ! task.done).length}</h1>
+    {taskToShow.map(task =>
+      <Task
+          doneTask = {() => this.doneTask(task.id)}
+          deleteTask = {() => this.deleteTask(task.id)}
+          task={task}
+          key={task.id}>
+      </Task>
+    )}
+     <Paginator setPage={this.setPage.bind(this)} pages={Math.ceil(tasks.length/pageSize)} currentPage={currentPage} />
     <TaskInput addTask= {this.addTask}></TaskInput>
-    <h1>f11 для полного экрана</h1>
     </div>
-  
+
   );
   }
 }
